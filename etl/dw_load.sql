@@ -17,7 +17,8 @@ SELECT DISTINCT
  EXTRACT(YEAR FROM sale_date),
  EXTRACT(MONTH FROM sale_date),
  EXTRACT(QUARTER FROM sale_date)
-FROM staging_sales;
+FROM staging_sales
+WHERE sale_date IS NOT NULL;
 
 INSERT INTO fact_sales
 SELECT
@@ -30,4 +31,5 @@ SELECT
  s.status
 FROM staging_sales s
 JOIN dim_customers c ON c.name = s.customer_name
-JOIN dim_products p ON p.name = s.product_name;
+JOIN dim_products p ON p.name = s.product_name
+WHERE s.sale_date IS NOT NULL;

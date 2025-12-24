@@ -22,9 +22,10 @@ SELECT
  product_name,
 
  CASE
-   WHEN sale_date LIKE '%/%' THEN TO_DATE(sale_date,'DD/MM/YYYY')
-   WHEN sale_date LIKE '%-%' THEN TO_DATE(sale_date,'YYYY-MM-DD')
-   WHEN sale_date LIKE '%-%-%' THEN TO_DATE(sale_date,'DD-MM-YYYY')
+   WHEN sale_date ~ '^\d{2}/\d{2}/\d{4}$' THEN TO_DATE(sale_date,'DD/MM/YYYY')
+   WHEN sale_date ~ '^\d{4}/\d{2}/\d{2}$' THEN TO_DATE(sale_date,'YYYY/MM/DD')
+   WHEN sale_date ~ '^\d{4}-\d{2}-\d{2}$' THEN TO_DATE(sale_date,'YYYY-MM-DD')
+   WHEN sale_date ~ '^\d{2}-\d{2}-\d{4}$' THEN TO_DATE(sale_date,'MM-DD-YYYY')
    ELSE NULL
  END as sale_date,
 
